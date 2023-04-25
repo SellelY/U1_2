@@ -40,13 +40,13 @@ function loginPage() {
 
             let data = await response.json();
             
-            if (!response.ok) {
-                connectFeedback(response.status);
-                message.innerHTML = `Wrong username or password.`;
-            } else {
+            if (response.ok) {
                 window.localStorage.setItem("loginOrQuiz", JSON.stringify(data));
                 user = data;
                 quizPage();
+            } else {
+                connectFeedback(response.status);
+                message.innerHTML = `Wrong username or password.`;
             }
         } catch (error) {
             message.textContent = `Error: ${error.message}`;
@@ -69,5 +69,15 @@ async function attemptLogin() {
         });
 
         let data = await response.json();
+
+        if (response.ok) {
+            window.localStorage.setItem("loginOrQuiz", JSON.stringify(data));
+            user = data;
+            quizPage();
+        } else {
+            loginPage;
+        }
+    } catch (error) {
+        loginPage();
     }
 }
