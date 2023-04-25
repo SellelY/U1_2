@@ -81,3 +81,24 @@ async function attemptLogin() {
         loginPage();
     }
 }
+
+function registerPage() {
+    main.innerHTML = `
+    
+        <h2>Login</h2>
+        <form>
+
+            <h3>Username</h3>
+            <input type=text id=username>
+            <h3>Password</h3>
+            <input type=password id=password>
+
+            <p id=message><p>
+            <button type=submit>Login</button>
+
+            <button id=register><u>New to this? Register for free</u></button>
+
+        </form>
+
+    `;
+}
