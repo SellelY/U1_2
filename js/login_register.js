@@ -53,8 +53,7 @@ function loginPage() {
         }
     });
 }
-//!! ta bort
-loginPage();
+
 
 async function attemptLogin() {
     
@@ -94,11 +93,37 @@ function registerPage() {
             <input type=password id=password>
 
             <p id=message><p>
-            <button type=submit>Login</button>
+            <button type=submit>Register</button>
 
             <button id=register><u>New to this? Register for free</u></button>
 
         </form>
 
     `;
+
+    let loginBtn = main.querySelector("#login");
+    loginBtn.addEventListener("click", loginPage);
+
+    let registerForm = main.querySelector("form");
+    registerForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        let message = main.querySelector("#message");
+
+        try {
+            let response = await fetch("api/register.php", {
+                method = "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: this.element.username.value,
+                    password: this.element.password.value
+                }),
+            });
+
+            let data = await response.json();
+
+            if (!response.ok) {
+                message.innerHTML = ``;
+            }
+        }
+    })
 }
