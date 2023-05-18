@@ -29,11 +29,11 @@ function loginPage() {
 
         try {
 
-            let response = await fetch(URL, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
+            let response = await fetch(URL + `?action=check_credentials&user_name=${username}&password=${password}`, {
+                method: "GET",
+                headers: {"Content-Type": "application/json; charset=UTF-8"},
                 body: JSON.stringify({
-                    username: this.elements.username.value,
+                    user_name: this.elements.username.value,
                     password: this.elements.password.value,
                 }),
             });
@@ -84,7 +84,7 @@ async function attemptLogin() {
 function registerPage() {
     main.innerHTML = `
     
-        <h2>Login</h2>
+        <h2>Register</h2>
         <form>
 
             <h3>Username</h3>
@@ -95,7 +95,7 @@ function registerPage() {
             <p id=message><p>
             <button type=submit>Register</button>
 
-            <button id=register><u>New to this? Register for free</u></button>
+            <button id=login><u>Already have an account? Login here</u></button>
 
         </form>
 
@@ -109,21 +109,31 @@ function registerPage() {
         event.preventDefault();
         let message = main.querySelector("#message");
 
+        const formElement = event.target;
+        const username = formElement.querySelector("#username").value;
+        const password = formElement.querySelector("#password").value;
+
         try {
-            let response = await fetch("api/register.php", {
-                method = "POST",
-                headers: {"Content-Type": "application/json"},
+            let response = await fetch(URL, {
+                method : "POST",
+                headers: {"Content-Type": "application/json; charset=UTF-8"},
                 body: JSON.stringify({
-                    username: this.element.username.value,
-                    password: this.element.password.value
+                    action: "register",
+                    user_name: username,
+                    password: password
                 }),
             });
 
             let data = await response.json();
+            console.log(data);
 
             if (!response.ok) {
-                message.innerHTML = ``;
+                connectFeedback(response.status);
             }
+        } catch (error) {
+            console.error("Failed to register user", error);
         }
     })
 }
+
+loginPage();

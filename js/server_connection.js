@@ -19,26 +19,17 @@ async function sendRequest(POSTorGET) {
 function connectFeedback(status) {
 
     if(status === 200) {
-        messageDiv.classList.remove("hidden");
-
-        _status.textContent = "Registration is successful!";
-        loginButton.disabled = false;
-
+        message.innerHTML = "Registration is successful!";
     } else if(status === 409) {
-        messageDiv.classList.remove("hidden");
-        _status.textContent = "Sorry, the name is already taken";
-        loginButton.disabled = false;
+        message.innerHTML = `Sorry, the name is already taken`;
 
     } else if(status === 418) {
-        messageDiv.classList.remove("hidden");
-        _status.textContent = "The server thinks it's not a teapot!";
-        loginButton.disabled = false;
-
+        message.innerHTML = `The server thinks it's not a teapot!`;
     } else {
+        //!! KOLLA HÄR
         messageDiv.classList.add("hidden");
         wrongPasswordOrUsername.classList.remove("hidden");
         loginButton.disabled = false;
-
     }
 
     // show button
