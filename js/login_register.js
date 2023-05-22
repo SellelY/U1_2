@@ -1,6 +1,16 @@
-function loginPage() {
-    main.innerHTML = `
+let user = null;
+let main = document.querySelector("main");
 
+if (!window.localStorage.getItem("user")) {
+    loginPage();
+} else {
+    user = JSON.parse(window.localStorage.getItem("user"));
+    attemptLogin();
+}
+
+function loginPage() {
+    
+    main.innerHTML = `
         <h2>Login</h2>
         <form>
 
@@ -15,7 +25,6 @@ function loginPage() {
             <button id=register><u>New to this? Register for free</u></button>
 
         </form>
-
     `;
 
     let registerBtn = main.querySelector("#register");
@@ -25,31 +34,22 @@ function loginPage() {
     loginForm.addEventListener("submit", async function(event) {
 
         event.preventDefault();
-        let message = main.querySelector("#message");
+        const formElement = event.target;
+        const username = formElement.querySelector("#username").value;
+        const password = formElement.querySelector("#password").value;
 
-        try {
+        const request = new Request(URL + `?action=check_credentials&user_name=${username}&password=${password}`, {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }, 
+        });
 
-            let response = await fetch(URL + `?action=check_credentials&user_name=${username}&password=${password}`, {
-                method: "GET",
-                headers: {"Content-Type": "application/json; charset=UTF-8"},
-                body: JSON.stringify({
-                    user_name: this.elements.username.value,
-                    password: this.elements.password.value,
-                }),
-            });
-
-            let data = await response.json();
-            
-            if (response.ok) {
-                window.localStorage.setItem("loginOrQuiz", JSON.stringify(data));
-                user = data;
-                quizPage();
-            } else {
-                connectFeedback(response.status);
-                message.innerHTML = `Wrong username or password.`;
-            }
-        } catch (error) {
-            message.textContent = `Error: ${error.message}`;
+        const resource = await sendRequest(request);
+        if (resource === undefined) {
+            console.log(resource);
+        } else {
+            quizPage();
         }
     });
 }
@@ -70,7 +70,7 @@ async function attemptLogin() {
         let data = await response.json();
 
         if (response.ok) {
-            window.localStorage.setItem("loginOrQuiz", JSON.stringify(data));
+            window.localStorage.setItem("user", JSON.stringify(data));
             user = data;
             quizPage();
         } else {
@@ -81,9 +81,9 @@ async function attemptLogin() {
     }
 }
 
-function registerPage() {
+async function registerPage() {
     main.innerHTML = `
-    
+
         <h2>Register</h2>
         <form>
 
@@ -107,31 +107,26 @@ function registerPage() {
     let registerForm = main.querySelector("form");
     registerForm.addEventListener("submit", async function(event) {
         event.preventDefault();
-        let message = main.querySelector("#message");
 
         const formElement = event.target;
         const username = formElement.querySelector("#username").value;
         const password = formElement.querySelector("#password").value;
 
-        try {
-            let response = await fetch(URL, {
-                method : "POST",
-                headers: {"Content-Type": "application/json; charset=UTF-8"},
-                body: JSON.stringify({
-                    action: "register",
-                    user_name: username,
-                    password: password
-                }),
-            });
+        const request = new Request(URL, {
+            method: "POST",
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify({
+                action: "register",
+                user_name: username,
+                password: password
+            }),
+        });
 
-            let data = await response.json();
-            console.log(data);
-
-            if (!response.ok) {
-                connectFeedback(response.status);
-            }
-        } catch (error) {
-            console.error("Failed to register user", error);
+        const resource = await sendRequest(request);
+        if (resource === undefined) {
+            console.log(resource);
+        } else {
+            connectFeedback(200);
         }
     })
 }

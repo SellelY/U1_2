@@ -17,27 +17,48 @@ async function sendRequest(POSTorGET) {
 
 //message div
 function connectFeedback(status) {
+    main.innerHTML = `
+        <div id=responseBox>
+            <p id=response></p>
+            <button id=closeBtn class=hidden>CLOSE</button>
+        </div>
+    `;
+    let responseBox = document.querySelector("#responseBox");
+    let responseP = document.querySelector("#response")
+    let closeBtn = document.querySelector("#closeBtn");
+
+    responseP.textContent = "Connecting...";
 
     if(status === 200) {
-        message.innerHTML = "Registration is successful!";
+        closeBtn.classList.remove("hidden");
+        responseP.innerHTML = "Registration complete! Please proceed to login.";
     } else if(status === 409) {
-        message.innerHTML = `Sorry, the name is already taken`;
-
+        closeBtn.classList.remove("hidden");
+        responseP.innerHTML = `Sorry, the name is already taken. Please try with another one.`;
     } else if(status === 418) {
-        message.innerHTML = `The server thinks it's not a teapot!`;
+        closeBtn.classList.remove("hidden");
+        responseP.innerHTML = `The server thinks it's not a teapot!`;
     } else {
-        //!! KOLLA HÄR
-        messageDiv.classList.add("hidden");
-        wrongPasswordOrUsername.classList.remove("hidden");
-        loginButton.disabled = false;
+        closeBtn.classList.remove("hidden");
+        responseP.innerHTML = `We got this from the server: ${status}`;
     }
 
-    // show button
-    closeButton.style.display = "block";
+    closeBtn.addEventListener("click", () => {
+        responseBox.classList.add("hidden");
+        
+        if (!window.localStorage.getItem("user")) {
+            loginPage();
+        } else {
+            user = JSON.parse(window.localStorage.getItem("user"));
+            attemptLogin();
+        }
+    })
+//     // show button
+//     closeButton.style.display = "block";
 
-    closeButton.addEventListener("click", () => {
-        messageDiv.classList.add("hidden");
-        loginButton.disabled = false;
+//     closeButton.addEventListener("click", () => {
+//         messageDiv.classList.add("hidden");
+//         loginButton.disabled = false;
 
-    });
+//     });
 }
