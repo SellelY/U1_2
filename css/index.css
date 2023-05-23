@@ -1,3 +1,12 @@
+@font-face {
+    font-family: Roboto;
+    src: url(/fonts/RobotoCondensed-Regular.ttf);
+}
+
+body {
+    font-family: Roboto;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -11,4 +20,8 @@ nav {
 
 .hidden {
     display: none;
+}
+
+button, input {
+    font-family: Roboto;
 }

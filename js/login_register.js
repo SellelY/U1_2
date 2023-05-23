@@ -4,13 +4,6 @@ let responseP = document.querySelector("#response")
 let closeBtn = document.querySelector("#closeBtn");
 let message = document.querySelector("#response");
 
-if (!window.localStorage.getItem("user")) {
-    loginPage();
-} else {
-    user = JSON.parse(window.localStorage.getItem("user"));
-    attemptLogin();
-}
-
 function loginPage() {
     
     main.innerHTML = `
@@ -54,36 +47,11 @@ function loginPage() {
         if (resource === undefined) {
             console.log(resource);
         } else {
+            user = username;
             quizPage();
+            localStorage.setItem("quizState", "visible");
         }
     });
-}
-
-
-async function attemptLogin() {
-    
-    try {
-        let response = await fetch(URL, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: user.username,
-                password: user.password,
-            }),
-        });
-
-        let data = await response.json();
-
-        if (response.ok) {
-            window.localStorage.setItem("user", JSON.stringify(data));
-            user = data;
-            quizPage();
-        } else {
-            loginPage();
-        }
-    } catch (error) {
-        loginPage();
-    }
 }
 
 async function registerPage() {
@@ -136,4 +104,12 @@ async function registerPage() {
     })
 }
 
-loginPage();
+window.onload = function() {
+    const quizState = localStorage.getItem("quizState");
+    if (quizState === "visible") {
+        quizPage();
+    } else {
+        loginPage();
+        localStorage.setItem("quizState", "hidden");
+    }
+};

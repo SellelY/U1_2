@@ -10,6 +10,13 @@ async function sendRequest(POSTorGET) {
         const resource = await response.json();
         tempResource = resource;
         console.log(resource);
+
+        const userName = resource.data.user_name;
+        console.log(userName);
+        if (userName) {
+            localStorage.setItem("username", userName);
+            quizPage();
+        }
     }
 
     return tempResource;
@@ -36,12 +43,6 @@ function connectFeedback(status) {
 
     closeBtn.addEventListener("click", () => {
         responseBox.classList.add("hidden");
-
-        if (!window.localStorage.getItem("user")) {
-            loginPage();
-        } else {
-            user = JSON.parse(window.localStorage.getItem("user"));
-            attemptLogin();
-        }
+        loginPage();
     })
 }

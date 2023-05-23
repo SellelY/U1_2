@@ -1,9 +1,9 @@
 async function quizPage() {
-    let user = JSON.parse(window.localStorage.getItem("user"));
+    const userName = localStorage.getItem("username");
 
     main.innerHTML = `
         <div id=meNav>
-            <p id=user_name>Hello</p>
+            <p id=user_name>${userName}</p>
             <button id=logout>logout</button>
         </div>
 
@@ -19,6 +19,8 @@ async function quizPage() {
         user = null;
         loginPage();
     })
+
+    responseP.textContent = "";
 
     try {
         const breedList = ALL_BREEDS.map(breed => breed.url);
