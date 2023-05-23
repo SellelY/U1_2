@@ -1,5 +1,8 @@
 let user = null;
 let main = document.querySelector("main");
+let responseP = document.querySelector("#response")
+let closeBtn = document.querySelector("#closeBtn");
+let message = document.querySelector("#response");
 
 if (!window.localStorage.getItem("user")) {
     loginPage();
@@ -32,8 +35,10 @@ function loginPage() {
 
     let loginForm = main.querySelector("form");
     loginForm.addEventListener("submit", async function(event) {
-
         event.preventDefault();
+
+        responseP.textContent = "Connecting...";
+
         const formElement = event.target;
         const username = formElement.querySelector("#username").value;
         const password = formElement.querySelector("#password").value;
@@ -74,7 +79,7 @@ async function attemptLogin() {
             user = data;
             quizPage();
         } else {
-            loginPage;
+            loginPage();
         }
     } catch (error) {
         loginPage();

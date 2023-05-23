@@ -17,17 +17,8 @@ async function sendRequest(POSTorGET) {
 
 //message div
 function connectFeedback(status) {
-    main.innerHTML = `
-        <div id=responseBox>
-            <p id=response></p>
-            <button id=closeBtn class=hidden>CLOSE</button>
-        </div>
-    `;
     let responseBox = document.querySelector("#responseBox");
-    let responseP = document.querySelector("#response")
-    let closeBtn = document.querySelector("#closeBtn");
-
-    responseP.textContent = "Connecting...";
+    responseP.textContent = "";
 
     if(status === 200) {
         closeBtn.classList.remove("hidden");
@@ -39,8 +30,8 @@ function connectFeedback(status) {
         closeBtn.classList.remove("hidden");
         responseP.innerHTML = `The server thinks it's not a teapot!`;
     } else {
-        closeBtn.classList.remove("hidden");
-        responseP.innerHTML = `We got this from the server: ${status}`;
+        closeBtn.classList.add("hidden");
+        message.textContent = "Wrong username or password";
     }
 
     closeBtn.addEventListener("click", () => {
