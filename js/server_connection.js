@@ -45,7 +45,7 @@ function connectFeedback(status) {
 
     closeBtn.addEventListener("click", () => {
         responseBox.classList.add("hidden");
-        
+
         if (!window.localStorage.getItem("user")) {
             loginPage();
         } else {
@@ -53,12 +53,4 @@ function connectFeedback(status) {
             attemptLogin();
         }
     })
-//     // show button
-//     closeButton.style.display = "block";
-
-//     closeButton.addEventListener("click", () => {
-//         messageDiv.classList.add("hidden");
-//         loginButton.disabled = false;
-
-//     });
 }
