@@ -1,11 +1,13 @@
 let user = null;
 let main = document.querySelector("main");
-let responseP = document.querySelector("#response")
+let responseP = document.querySelector("#response");
 let closeBtn = document.querySelector("#closeBtn");
 let message = document.querySelector("#message");
 let responseContainer = document.querySelector("#containerResponse");
+let body = document.querySelector("body");
 
 function loginPage() {
+    body.style.backgroundImage = "url('/media/Horizoon.png')";
     
     main.innerHTML = `
         <h2>Login</h2>
@@ -32,7 +34,8 @@ function loginPage() {
         event.preventDefault();
 
         responseContainer.classList.remove("hidden");
-        responseP.textContent = "Connecting...";
+        closeBtn.classList.add("hidden");
+        responseP.textContent = "Connecting server...";
 
         const formElement = event.target;
         const username = formElement.querySelector("#username").value;
@@ -50,14 +53,19 @@ function loginPage() {
             console.log(resource);
         } else {
             user = username;
-            quizPage();
             localStorage.setItem("quizState", "visible");
+
+            responseContainer.classList.add("hidden");
+            responseP.textContent = "";
         }
     });
 }
 
 async function registerPage() {
+    body.style.backgroundImage = "url('/media/worldWater.jpg')";
+
     main.innerHTML = `
+
 
         <h2>Register</h2>
         <form>
