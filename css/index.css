@@ -5,6 +5,7 @@
 
 body {
     font-family: Roboto;
+    margin: 0px;
 }
 
 nav {
@@ -22,9 +23,47 @@ nav {
     display: none;
 }
 
+#responseBackground{
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#responseBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: white;
+    border-radius: 20px;
+    min-width: 250px;
+    max-height: 90px;
+    padding: 10px;
+}
+
+#response {
+    font-size: 15px;
+}
+
 button, input {
     font-family: Roboto;
     height: 25px;
+}
+
+#closeBtn {
+    padding: 0px 70px;
+    height: 40px;
+}
+
+#logRegBtn {
+    height: 40px;
+    font-size: 17px;
 }
 
 main {
@@ -50,11 +89,57 @@ h3 {
 
 footer {
     position: absolute;
-    bottom: 10px;
+    bottom: -20px;
     font-size: 13px;
     padding: 25px;
+    left: 15px;
 }
 
 footer > p {
     margin: 0px;
+}
+
+#message {
+    font-size: 12px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#register, #login{
+    border: none;
+    background: transparent;
+    margin-top: 50px;
+    font-size: 15px;
+}
+
+#image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#image > img {
+    width: 360px;
+    border-radius: 20px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#alternatives {
+    display: grid;
+    grid-template-columns: 180px 180px;
+}
+
+#alternatives > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
 }

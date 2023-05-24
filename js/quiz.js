@@ -20,6 +20,7 @@ async function quizPage() {
         loginPage();
     })
 
+    responseContainer.classList.add("hidden");
     responseP.textContent = "";
 
     try {
@@ -53,7 +54,13 @@ async function quizPage() {
             button.textContent = alternative;
             button.className = (alternative === randomBreed.name) ? "correct" : "";
             altContainer.appendChild(button);
+
+            if (Math.random() < 0.25) {
+                button.className = (alternative === randomBreed.name) ? "correct" : "";
+            }
         });
+
+
     } catch (error) {
         console.log("Error:", error);
     }

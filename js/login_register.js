@@ -2,7 +2,8 @@ let user = null;
 let main = document.querySelector("main");
 let responseP = document.querySelector("#response")
 let closeBtn = document.querySelector("#closeBtn");
-let message = document.querySelector("#response");
+let message = document.querySelector("#message");
+let responseContainer = document.querySelector("#containerResponse");
 
 function loginPage() {
     
@@ -15,8 +16,8 @@ function loginPage() {
             <h3>Password</h3>
             <input type=password id=password>
 
-            <p id=message><p>
-            <button type=submit>Login</button>
+            <p id=message>Let the magic start!</p>
+            <button id=logRegBtn type=submit>Login</button>
 
             <button id=register><u>New to this? Register for free</u></button>
 
@@ -30,6 +31,7 @@ function loginPage() {
     loginForm.addEventListener("submit", async function(event) {
         event.preventDefault();
 
+        responseContainer.classList.remove("hidden");
         responseP.textContent = "Connecting...";
 
         const formElement = event.target;
@@ -65,8 +67,8 @@ async function registerPage() {
             <h3>Password</h3>
             <input type=password id=password>
 
-            <p id=message><p>
-            <button type=submit>Register</button>
+            <p id=message>Ready when you are...</p>
+            <button id=logRegBtn type=submit>Register</button>
 
             <button id=login><u>Already have an account? Login here</u></button>
 
@@ -80,6 +82,9 @@ async function registerPage() {
     let registerForm = main.querySelector("form");
     registerForm.addEventListener("submit", async function(event) {
         event.preventDefault();
+
+        responseContainer.classList.remove("hidden");
+        responseP.textContent = "Connecting...";
 
         const formElement = event.target;
         const username = formElement.querySelector("#username").value;

@@ -24,8 +24,8 @@ async function sendRequest(POSTorGET) {
 
 //message div
 function connectFeedback(status) {
-    let responseBox = document.querySelector("#responseBox");
     responseP.textContent = "";
+    let message = document.querySelector("#message");
 
     if(status === 200) {
         closeBtn.classList.remove("hidden");
@@ -37,12 +37,14 @@ function connectFeedback(status) {
         closeBtn.classList.remove("hidden");
         responseP.innerHTML = `The server thinks it's not a teapot!`;
     } else {
+        responseContainer.classList.add("hidden");
         closeBtn.classList.add("hidden");
         message.textContent = "Wrong username or password";
+        message.style.backgroundColor = "white";
     }
 
     closeBtn.addEventListener("click", () => {
-        responseBox.classList.add("hidden");
+        responseContainer.classList.add("hidden");
         loginPage();
     })
 }
